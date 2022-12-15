@@ -49,7 +49,9 @@ class Module(ValueObject):
             return False
 
     def is_descendant_of(self, module: "Module") -> bool:
-        return self.name.startswith(f"{module.name}.")
+        direct = self.name.startswith(f"{module.name}.")
+        with_prefix = self.name.startswith(f"zapier.{module.name}.")
+        return direct or with_prefix
 
     def is_in_package(self, package: "Module") -> bool:
         return self == package or self.is_descendant_of(package)
